@@ -48,7 +48,7 @@ def send_to_yaml(yaml_filename, dict_list):
         yaml.dump(data_dict, outfile, default_flow_style=False)
 
 def outlier_filter(point_cloud, neighboring_pts, scale_factor):
-    ''' Removes point_cloud data outliers based on neighboring_pts 
+    ''' Removes point_cloud data outliers based on neighboring_pts
     and standard deviation on the scale_factor
     :param point_cloud: pcl filtered clusters
     :param neighboring_pts: number of neighbouring points to be analyzed
@@ -73,9 +73,9 @@ def voxel_grid_filter(point_cloud, leaf_size):
 def passthrough_filter(point_cloud, axis, axis_min, axis_max):
     ''' Filters the point cloud to only the data within the min and max values
     :param point_cloud: pcl filtered clusters
-    :param axis: axis to be filter along. 
-                 x is in the direction of the camera, 
-                 y is the left & right of the camera, 
+    :param axis: axis to be filter along.
+                 x is in the direction of the camera,
+                 y is the left & right of the camera,
                  z up & down
     :param axis_min: min threshold distance for filter
     :param axis_min: max threshold distance for filter
@@ -90,7 +90,7 @@ def ransac_filter(point_cloud, max_distance):
     ''' RANSAC plane segmentation for segmenting the table
     :param point_cloud: pcl filtered clusters
     :param max_distance: max length of a point to be considered to fit the model
-    :returns: inlier indices and model coefficients of the segment 
+    :returns: inlier indices and model coefficients of the segment
     '''
     segmenter = point_cloud.make_segmenter()
     segmenter.set_model_type(pcl.SACMODEL_PLANE)
@@ -115,25 +115,25 @@ def pcl_callback(pcl_msg):
 
 # Exercise-2 TODOs:
 
-    # TODO: Convert ROS msg to PCL data
+    # Convert ROS msg to PCL data
     pcl_filtered = ros_to_pcl(pcl_msg)
-    # TODO: Statistical Outlier Filtering
+    # Statistical Outlier Filtering
     pcl_filtered = outlier_filter(pcl_filtered, neighboring_pts=5, scale_factor=0.05)
-    # TODO: Voxel Grid Downsampling
+    # Voxel Grid Downsampling
     pcl_filtered = voxel_grid_filter(pcl_filtered, 0.005)
-    # TODO: PassThrough Filter
+    # PassThrough Filter
     pcl_filtered = passthrough_filter(pcl_filtered, axis='x', axis_min=0.1, axis_max=0.9)
     pcl_filtered = passthrough_filter(pcl_filtered, axis='y', axis_min=-0.47, axis_max=0.47)
     pcl_filtered = passthrough_filter(pcl_filtered, axis='z', axis_min=0.6, axis_max=0.9)
-    # TODO: RANSAC Plane Segmentation
+    # RANSAC Plane Segmentation
     inliers, coefficients = ransac_filter(pcl_filtered, max_distance=0.01)
-    # TODO: Extract inliers and outliers
+    # Extract inliers and outliers
     cloud_table = pcl_filtered.extract(inliers, negative=False)
     cloud_objects = pcl_filtered.extract(inliers, negative=True)
-    # TODO: Euclidean Clustering
-    white_cloud = XYZRGB_to_XYZ(cloud_objects)  
+    # Euclidean Clustering
+    white_cloud = XYZRGB_to_XYZ(cloud_objects)
     cluster_indices = euclidean_cluster(white_cloud)
-    # TODO: Create Cluster-Mask Point Cloud to visualize each cluster separately
+    # Create Cluster-Mask Point Cloud to visualize each cluster separately
     cluster_color = get_color_list(len(cluster_indices))
     color_cluster_point_list = []
     for i, indexes in enumerate(cluster_indices):
@@ -144,11 +144,11 @@ def pcl_callback(pcl_msg):
                                              rgb_to_float(cluster_color[i])])
     cluster_cloud = pcl.PointCloud_PointXYZRGB()
     cluster_cloud.from_list(color_cluster_point_list)
-    # TODO: Convert PCL data to ROS messages
+    # Convert PCL data to ROS messages
     ros_cloud_objects = pcl_to_ros(cloud_objects)
     ros_cloud_table = pcl_to_ros(cloud_table)
     ros_cluster_cloud = pcl_to_ros(cluster_cloud)
-    # TODO: Publish ROS messages
+    # Publish ROS messages
     pcl_objects_pub.publish(ros_cloud_objects)
     pcl_table_pub.publish(ros_cloud_table)
     pcl_cluster_pub.publish(ros_cluster_cloud)
@@ -194,18 +194,18 @@ def pcl_callback(pcl_msg):
 # function to load parameters and request PickPlace service
 def pr2_mover(object_list):
 
-	# TODO: Initialize variables
+	# Initialize variables
     dict_list = []
     labels = []
     centroids = []
-    # TODO: Get/Read parameters
+    # Get/Read parameters
     object_list_param = rospy.get_param('/object_list')
-    # TODO: Parse parameters into individual variables
+    # Parse parameters into individual variables
     for i in range(len(object_list_param)):
         object_name = object_list_param[i]['name']
         object_group = object_list_param[i]['group']
 
-        # TODO: Loop through the pick list
+        # Loop through the pick list
         for j, obj in enumerate(object_list):
             labels.append(obj.label)
             points_arr = ros_to_pcl(obj.cloud).to_array()
@@ -215,13 +215,13 @@ def pr2_mover(object_list):
             if obj.label == object_name:
                 labels.append(obj.label)
                 points_arr = ros_to_pcl(obj.cloud).to_array()
-                # TODO: Get the PointCloud for a given object and obtain it's centroid
+                # Get the PointCloud for a given object and obtain it's centroid
                 centroids.append(np.mean(points_arr, axis=0)[:3])
                 pick_pose = Pose()
                 pick_pose.position.x = np.asscalar(centroids[j][0])
                 pick_pose.position.y = np.asscalar(centroids[j][1])
                 pick_pose.position.z = np.asscalar(centroids[j][2])
-                # TODO: Create 'place_pose' for the object
+                # Create 'place_pose' for the object
                 dropbox_param = rospy.get_param('/dropbox')
                 place_pose = Pose()
                 arm_name = String()
@@ -238,7 +238,7 @@ def pr2_mover(object_list):
                     place_pose.position.y = dropbox_param[1]['position'][1] - 0.06 * i
                     place_pose.position.z = dropbox_param[1]['position'][2]
 
-	            # TODO: Create a list of dictionaries (made with make_yaml_dict()) for later output to yaml format
+	            # Create a list of dictionaries (made with make_yaml_dict()) for later output to yaml format
                 test_scene_num = Int32()
                 test_scene_num.data = scene_num
                 obj_name = String()
@@ -253,7 +253,7 @@ def pr2_mover(object_list):
     try:
         pick_place_routine = rospy.ServiceProxy('pick_place_routine', PickPlace)
 
-        # TODO: Insert your message variables to be sent as a service request
+        # Insert your message variables to be sent as a service request
         resp = pick_place_routine(test_scene_num, obj_name, arm_name, pick_pose, place_pose)
 
         print ("Response: ",resp.success)
@@ -267,17 +267,17 @@ def pr2_mover(object_list):
 
 if __name__ == '__main__':
 
-    # TODO: ROS node initialization
+    # ROS node initialization
     rospy.init_node('clustering', anonymous=True)
-    # TODO: Create Subscribers
+    # Create Subscribers
     pcl_sub = rospy.Subscriber("/pr2/world/points", PointCloud2, pcl_callback, queue_size=1)
-    # TODO: Create Publishers
+    # Create Publishers
     pcl_objects_pub = rospy.Publisher("/pcl_objects", PointCloud2, queue_size=1)
     pcl_table_pub = rospy.Publisher("/pcl_table", PointCloud2, queue_size=1)
     pcl_cluster_pub = rospy.Publisher("/pcl_cluster", PointCloud2, queue_size=1)
     object_markers_pub = rospy.Publisher("/object_markers", Marker, queue_size=1)
     detected_objects_pub = rospy.Publisher("/detected_objects", DetectedObjectsArray, queue_size=1)
-    # TODO: Load Model From disk
+    # Load Model From disk
     model = pickle.load(open('model.sav', 'rb'))
     clf = model['classifier']
     encoder = LabelEncoder()
@@ -285,6 +285,6 @@ if __name__ == '__main__':
     scaler = model['scaler']
     # Initialize color_list
     get_color_list.color_list = []
-    # TODO: Spin while node is not shutdown
+    # Spin while node is not shutdown
     while not rospy.is_shutdown():
         rospy.spin()
