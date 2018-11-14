@@ -142,3 +142,10 @@ Test World 3 resulted in 7 out of 8 accurate classification. Below is the screen
 ![Test World 3](https://github.com/Amay22/RoboND-Perception-PR2-Robot/blob/master/images/test_world3.png)
 
 #### Future Work and Enhancements
+
+
+The position of the objects that we have captured in the output.yaml files is not extremely accurate. It gives a general bearing of the object which is quite good enough for the robot to go and get it. This is not a deal-breaker because the robot functions quite accurately. We should fix it though.
+
+The project and code setup to look at the table-top which is on a proper horizontal ground but if we the table top had separate levels like a stair-case then code will not work. The project for classification probably won't work if two or more objects are stacked on top of another which is a very practical use-case in warehouses.
+
+In Test world 3 we were not able to classify all the objects accurately because the objects were hiding behind another object. One way to improve is by extracting more feature like Histogram Of Gradient (HOG) or different colour spaces in our SVM. Also we could rotate the view and get true 3D PCL information and if we have that we can analyze it from all points of view; think of it like a hologram like they show in movies.
