@@ -107,11 +107,38 @@ The test environment's cover three different combinations of various objects. Th
 - glue
 - sticky_notes
 - snacks
- eraser
+- eraser
 
-#### Environment 1
+#### Test World 1
 
-Upon classification of the objects, a Picking List of the order in which an object is to be picked up and its resulting drop location was issued. This function uses two for loops to first iterate over the picking list, which then compares the current picking item against all the detected clusters. Upon a match, the cluster's centroid, lines 318 to 321, is then passed to the robots movement service routine, line 373, along with the environment number, objects name, the left or right robot arm to pick the object up with, the objects pickup location and the objects final drop location.
+Upon classification of the objects, a Picking List of the order in which an object is to be picked up and its resulting drop location was issued. Once we use the SVM model for clusterring and detection the code issues a command to the robot to move it's right or left arm to pick up the object and drop it off. The output file contains the information about the objects and the arm to use to pick up the object. It's quite seamless and fairly accurate as you can see in the image.
 
+##### [OUTPUT 1](https://github.com/Amay22/RoboND-Perception-PR2-Robot/blob/master/output/output_1.yaml)
+
+Test World 1 resulted in 3 out of 3 accurate classification. Below is the screenshot of test1.world with the console output while I was doing it.
+
+![Test World 1](https://github.com/Amay22/RoboND-Perception-PR2-Robot/blob/master/images/test_world1.png)
+
+
+#### Test World 2
+
+This was actually very quick. Since there were more objects I was expecting it have some glitches but surprisingly it worked.
+
+##### [OUTPUT 2](https://github.com/Amay22/RoboND-Perception-PR2-Robot/blob/master/output/output_2.yaml)
+
+Test World 2 resulted in 5 out of 5 accurate classification. Below is the screenshot of test1.world with the console output while I was doing it.
+
+![Test World 2](https://github.com/Amay22/RoboND-Perception-PR2-Robot/blob/master/images/test_world2.png)
+
+
+#### Test World 3
+
+Test world 3 by far has the most number of objects and some objects are partially behind the others so this is a challenging one.
+
+##### [OUTPUT 3](https://github.com/Amay22/RoboND-Perception-PR2-Robot/blob/master/output/output_3.yaml)
+
+Test World 3 resulted in 7 out of 8 accurate classification. Below is the screenshot of test1.world with the console output while I was doing it. I am not particularly sad about not getting a perfect score because the glue is hiding right behind the book and it's kind of difficult to get.
+
+![Test World 3](https://github.com/Amay22/RoboND-Perception-PR2-Robot/blob/master/images/test_world3.png)
 
 #### Future Work and Enhancements
