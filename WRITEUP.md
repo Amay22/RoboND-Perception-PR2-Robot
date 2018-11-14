@@ -43,15 +43,15 @@ The RGB-D camera mounted on the robot gives us the Point-Cloud data. This Point-
 
 Below is an example of the output of the voxelGrid output:
 
-![voxelGrid pcl](https://github.com/Amay22/RoboND-Perception-PR2-Robot/images/voxelGrid_pcl.png)
+![voxelGrid pcl](https://github.com/Amay22/RoboND-Perception-PR2-Robot/blob/master/images/voxelGrid_pcl.png)
 
 Below is an example of the output of the passThrough filter output:
 
-![passThrough filter](https://github.com/Amay22/RoboND-Perception-PR2-Robot/images/pass_through.png)
+![passThrough filter](https://github.com/Amay22/RoboND-Perception-PR2-Robot/blob/master/images/pass_through.png)
 
 Below is an example of the output of the RANSAC algorithm using the function ransacFilter() filter output for the outliers i.e the points that do not match the background, mostly the objects:
 
-![Ransac filter](https://github.com/Amay22/RoboND-Perception-PR2-Robot/images/ransac_outliers.png)
+![Ransac filter](https://github.com/Amay22/RoboND-Perception-PR2-Robot/blob/master/images/ransac_outliers.png)
 
 #### 2. Complete Exercise 2 steps: Pipeline including clustering for segmentation implemented.
 
@@ -69,7 +69,7 @@ As you can see the minimum and max are quite far apart. This is to make sure tha
 
 Below is an example of the output of the Euclidean Clustering algorithm i.e. the DBSCAN algorithm in this case:
 
-![Euclidean Clustering](https://github.com/Amay22/RoboND-Perception-PR2-Robot/images/euclidean_clustering.png)
+![Euclidean Clustering](https://github.com/Amay22/RoboND-Perception-PR2-Robot/blob/master/images/euclidean_clustering.png)
 
 
 #### 3. Complete Exercise 3 Steps.  Features extracted and SVM trained.  Object recognition implemented.
@@ -87,11 +87,11 @@ SVM (Support Vector Machine) is the perfect solution to figure out what type of 
 
 The resulting Confusion matrix with normalization can be found here:
 
-![Normalized Confusion matrix](https://github.com/Amay22/RoboND-Perception-PR2-Robot/images/normalized_confusion_matrix.png)
+![Normalized Confusion matrix](https://github.com/Amay22/RoboND-Perception-PR2-Robot/blob/master/images/normalized_confusion_matrix.png)
 
 The resulting Confusion matrix without normalization can be found here:
 
-![Normalized Confusion matrix](https://github.com/Amay22/RoboND-Perception-PR2-Robot/images/non_normalized_confusion_matrix.png)
+![Normalized Confusion matrix](https://github.com/Amay22/RoboND-Perception-PR2-Robot/blob/master/images/non_normalized_confusion_matrix.png)
 
 ### Pick and Place Setup
 
